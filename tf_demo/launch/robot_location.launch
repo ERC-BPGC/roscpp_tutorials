@@ -1,0 +1,13 @@
+<launch>
+  <param name="/use_sim_time" value="true"/>  
+
+  <!-- Run Gazebo with turtlebot -->
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch"/>
+
+  <!-- Publish a static transformation between /odom and /map -->
+  <node name="tf" pkg="tf" type="static_transform_publisher" args="-1 -2 0 0 0 0 /map /odom 100" />
+
+  <!-- Run node -->
+  <node name="robot_location" pkg="tf_demo" type="robot_location" output="screen" />
+
+</launch>

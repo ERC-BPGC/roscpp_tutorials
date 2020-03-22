@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>89-685: Introduction to Robotics</title>
+
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Helvetica, sans-serif;
+            color: rgb(81,107,158);
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 align="center">89-685: Introduction to Robotics</h1>
+    <h2 align="center">Fall 2016: Assignment 3</h2>
+
+    <p>
+        Due at 23:59:59, Sunday, March 19th, 2017.<br>
+    </p>
+
+    <h2>Purpose</h2>
+	In this assignment you will continue the navigation task from the previous assignment. This time you will create a simple 
+	executioner that will execute the navigation plan computed by the planner from the last assignment.    
+    <br>
+    Your program will be given a starting location and a goal location, and should move the robot from the starting location
+	to the goal location, along the shortest path connecting them.
+	 
+    <h2>Input Parameters</h2>
+	The launch file of your program should include the following parameters (the values are given here as an example):
+    <blockquote>
+        <code>&lt;arg name="map_file" default="$(find turtlebot_gazebo)/maps/playground.yaml" /&gt;
+			<br/>
+			&lt;param name="starting_location" value="0,0" /&gt;
+            <br/>
+            &lt;param name="goal_location" value="2,-1.5" /&gt;
+			<br/>
+            &lt;param name="robot_size" value="0.35" /&gt;
+			<br/>
+            &lt;param name="map_resolution" value="0.05" /&gt;
+        </code>
+    </blockquote>
+	A sample launch file can be found <a href="http://u.cs.biu.ac.il/~yehoshr1/89-685/assignment3/navigation_task.launch">here</a>.
+
+    <h2>Algorithm</h2>    
+    <ol>
+		<li>Invoke the planner from assignment 2 to compute the shortest path from the starting location to the goal location.</li>
+		<li>Smooth the path by choosing a set of waypoints on the path, such that the robot can move from one waypoint to the next one in a direct line (without turning). For example, if the path returned from A* is (1,1)&#8594;(1,2)&#8594;(1,3)&#8594;(2,3)&#8594;(2,4)&#8594;(2,5), and there is a direct line that connects (1,1) to (2,4) without getting into obstacles, then we can reduce the number of waypoints on the path to: (1,1)&#8594;(2,4)&#8594;(2,5).
+</li>
+		<li>Send the appropriate cmd_vel commands to the robot to make it move along the waypoints (define a threshold which specifies
+		how close the robot should get near a waypoint, before it can move to the next one).	
+    </ol>
+
+    <p>If there is no valid path from the starting location of the robot to its goal location (e.g., the goal location is outside the map
+	boundaries), you should print a suitable error message and exit. </p>
+		           
+    <h2>The Rules</h2>
+    <ol>        
+        <li>Make sure that your code is well organized and documented.</li>
+        <li>All parameter values should be configurable.</li>
+        <li>You should do this lab on your own.  All the work you turn in should
+        be yours, and not done in collaboration with anyone else.  If you use
+        any external sources of inspiration, other than <a href="http://ros.org/">ros.org</a>, then let us know in 
+        <code>README</code> file.
+    </li>
+    </ol>
+
+    <h2>What to Hand In</h2>
+
+    You should hand in everything that someone else needs to run your
+code. For this assignment, that means your source code, manifest file,
+    <code>CMakeFiles.txt</code> (if you're using C++), and launch files.
+You should <em>not</em> hand in executable files, or any other files
+that can be regenerated.
+    <p>
+        Your code should be easy to run.  After getting a copy of your code, running
+    </p>
+    <blockquote>
+        <code>catkin-make --pkg navigation_task<br>
+            roslaunch navigation_task navigation_task.launch<br>
+        </code>
+    </blockquote>    
+	should be sufficient to execute your planner and move the robot along the navigation plan. 
+     
+    <p>
+        Finally, zip all the necessary files and submit the zip file to ros.exercises@gmail.com.
+    </p>
+    <p>
+        Good luck!
+        <br>
+    </p>
+</body>
+</html>

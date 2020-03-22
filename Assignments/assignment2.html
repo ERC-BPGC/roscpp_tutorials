@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>89-685: Introduction to Robotics</title>
+
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Helvetica, sans-serif;
+            color: rgb(81,107,158);
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 align="center">89-685: Introduction to Robotics</h1>
+    <h2 align="center">Fall 2016: Assignment 2</h2>
+
+    <p>
+        Due at 23:59:59, Tuesday, January 24th, 2017.<br>
+    </p>
+
+    <h2>Purpose</h2>
+    The goal of this assignment is to create a simple navigation planner for the robot. 
+    <br>
+    Your program will be given a starting location and a goal location, and should generate the series of locations 
+	the robot needs to go through in order to reach the goal location from the starting location, using the shortest path connecting
+	them.
+ 
+    <h2>Input Parameters</h2>
+	The launch file of your program should include the following parameters (the values are given here as an example):
+    <blockquote>
+        <code>&lt;arg name="map_file" default="$(find turtlebot_gazebo)/maps/playground.yaml" /&gt;
+			<br/>
+			&lt;param name="starting_location" value="0,0" /&gt;
+            <br/>
+            &lt;param name="goal_location" value="2,-1.5" /&gt;
+			<br/>
+            &lt;param name="robot_size" value="0.35" /&gt;
+			<br/>
+            &lt;param name="map_resolution" value="0.05" /&gt;
+        </code>
+    </blockquote>
+	A sample launch file can be found <a href="http://u.cs.biu.ac.il/~yehoshr1/89-685/assignment2/navigation_planner.launch">here</a>.
+
+    <h2>Algorithm</h2>    
+    <ol>
+		<li>Load the given map file into memory (using map_server).</li>
+		<li>Convert the map into an occupancy grid, in which each cell is 0 (free) or 1 (occupied).</li>
+		<li>Inflate the obstacles in the grid according to the robot size and the map resolution.</li>
+		<li>Build a graph, in which each node represents a cell in the grid and the edges connect
+		adjacent cells in the grid.</li>
+		<li>Run <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> algorithm on the graph in order to 
+        compute the shortest path from the starting location to the goal location.</li>
+        <li>Print the path (i.e., the series of grid cells the robot needs to go through) to an output file named <code>navigation_plan.txt</code>.</li>        
+    </ol>
+
+    <p>If there is no valid path from the starting location of the robot to its goal location (e.g., the goal location is outside the map
+	boundaries), you should print a suitable error message and exit. </p>
+	
+	<p>Note: In this assignment you don't need to move the robot, thus you don't actually need to run the Gazebo simulator. 
+	In the next assignment you will make the robot move along the planned path.</p>
+           
+    <h2>The Rules</h2>
+    <ol>        
+        <li>Make sure that your code is well organized and documented.</li>
+        <li>All parameter values should be configurable.</li>
+        <li>You should do this lab on your own.  All the work you turn in should
+        be yours, and not done in collaboration with anyone else.  If you use
+        any external sources of inspiration, other than <a href="http://ros.org/">ros.org</a>, then let us know in 
+        <code>README</code> file.
+    </li>
+    </ol>
+
+    <h2>What to Hand In</h2>
+
+    You should hand in everything that someone else needs to run your
+code. For this assignment, that means your source code, manifest file,
+    <code>CMakeFiles.txt</code> (if you're using C++), and launch files.
+You should <em>not</em> hand in executable files, or any other files
+that can be regenerated.
+    <p>
+        Your code should be easy to run.  After getting a copy of your code, running
+    </p>
+    <blockquote>
+        <code>catkin-make --pkg navigation_planner<br>
+            roslaunch navigation_planner navigation_planner.launch<br>
+        </code>
+    </blockquote>    
+	should be sufficient to execute your planner and generate a navigation plan. 
+    <p>
+        You should also hand in a sample <code>navigation_plan</code> file from one of your test runs.
+    </p>
+    <p>
+        Finally, zip all the necessary files and submit the zip file to ros.exercises@gmail.com.
+    </p>
+    <p>
+        Good luck!
+        <br>
+    </p>
+</body>
+</html>
